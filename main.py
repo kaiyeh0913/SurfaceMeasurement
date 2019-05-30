@@ -114,7 +114,7 @@ def processGI(imgPath):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-m", "--mode", type=str, help="Mode. 0:Both, 1:Deflectometry, 2:Gradient Illumination ")
+    parser.add_argument("-m", "--mode", type=int, help="Mode. 0:Both, 1:Deflectometry, 2:Gradient Illumination ")
     parser.add_argument("-d", "--directory", type=str, help="Path of images directory")
     args = parser.parse_args()
 
