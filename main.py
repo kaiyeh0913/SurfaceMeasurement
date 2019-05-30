@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 import reconstruction as recon
 
-IMGPATTERN = "*.png"
+IMGPATTERN = "*.PNG"
 
 
 def readFileList(imgFolder):
