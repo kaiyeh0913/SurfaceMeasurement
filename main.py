@@ -65,19 +65,25 @@ def processDeflectometry(imgPath):
 
     assert (len(imgFileList) == 8), ("Images in the directory should be 8. Now is ",len(imgFileList))
 
-    for i in range(len(imgFileList)):
+    img = cv2.imread(os.path.join(imgPath, imgFileList[0]), cv2.IMREAD_COLOR)
+    imgSetDeflectometry = np.zeros((8, img.shape[0], img.shape[1], img.shape[2]), dtype=np.float32)
+    imgSetDeflectometry[0, ...] = img
 
-        img = cv2.imread(os.path.join(imgPath, imgFileList[i]), cv2.IMREAD_COLOR)
+    for i in range(len(imgFileList) - 1):
 
-        if i == 0:
-            imgSetDeflectometry = np.zeros((8, img.shape[0], img.shape[1], img.shape[2]), dtype=np.float32)
+        img = cv2.imread(os.path.join(imgPath, imgFileList[i + 1]), cv2.IMREAD_COLOR)
 
-        imgSetDeflectometry[i, ...] = img
+        # if i == 0:
+        #     imgSetDeflectometry = np.zeros((8, img.shape[0], img.shape[1], img.shape[2]), dtype=np.float32)
 
+        imgSetDeflectometry[i + 1, ...] = img
 
+    print("Reconstructing... ")
     deflectometry = recon.Deflectometry(imgSetDeflectometry)
     deflectometry.setNormal()
+    print("Exporting normal... ")
     deflectometry.exportNormal(resultPath)
+    print("Reconstructing Mesh... ")
     MeshD = recon.Mesh("deflectometry", deflectometry.height, deflectometry.width)
     MeshD.setNormal(deflectometry.normal)
     MeshD.setTexture(deflectometry.albedo)
@@ -93,18 +99,25 @@ def processGI(imgPath):
 
     assert (len(imgFileList) == 4), ("Images in the directory should be 4. Now is ",len(imgFileList))
 
-    for i in range(len(imgFileList)):
+    img = cv2.imread(os.path.join(imgPath, imgFileList[0]), cv2.IMREAD_COLOR)
+    imgSetGradientIllu = np.zeros((4, img.shape[0], img.shape[1], img.shape[2]), dtype=np.float32)
+    imgSetGradientIllu[0, ...] = img
 
-        img = cv2.imread(os.path.join(imgPath, imgFileList[i]), cv2.IMREAD_COLOR)
+    for i in range(len(imgFileList) - 1):
 
-        if i == 0:
-            imgSetGradientIllu = np.zeros((4, img.shape[0], img.shape[1], img.shape[2]), dtype=np.float32)
+        img = cv2.imread(os.path.join(imgPath, imgFileList[i + 1]), cv2.IMREAD_COLOR)
 
-        imgSetGradientIllu[i, ...] = img
+        # if i == 0:
+        #     imgSetGradientIllu = np.zeros((4, img.shape[0], img.shape[1], img.shape[2]), dtype=np.float32)
 
+        imgSetGradientIllu[i + 1, ...] = img
+
+    print("Reconstructing... ")
     gradientillu = recon.GradientIllumination(imgSetGradientIllu)
     gradientillu.setNormal()
+    print("Exporting normal... ")
     gradientillu.exportNormal(resultPath)
+    print("Reconstructing Mesh... ")
     MeshGI = recon.Mesh("gradientillumination", gradientillu.height, gradientillu.width)
     MeshGI.setNormal(gradientillu.normal)
     MeshGI.setTexture(gradientillu.albedo)
