@@ -90,7 +90,7 @@ class Mesh:
 		N = self.normals[self.mask[0]:self.mask[2], self.mask[1]:self.mask[3]].reshape(-1, 3)
 		filename = os.path.join(os.path.normpath(path), "mesh_" + self.name + ".obj")
 		f = open(filename, 'w')
-		f.write('mtllib material.mtl\n')
+		f.write('mtllib material_' + self.name + '.mtl\n')
 		f.write('usemtl Textured\n')
 		for i in range(self.vertex.shape[0]):
 			# progress.current += 1
