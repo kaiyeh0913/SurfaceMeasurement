@@ -11,6 +11,8 @@ Numpy, Scipy, OpenCV
 
 #### Usage
 
+In the app, we include two different methods for different material of the objects. Deflectometry is a surface scanning mehthod that suits for shiny surface and Gradient Illumination suits for 
+
 python main.py -m [mode: 0-Both, 1-Deflectometry 2-Gradient Illumination] -d [ImgPathDirectory]
 
 output: obj, mtl, jpg, png(normal map)
